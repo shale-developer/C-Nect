@@ -1,0 +1,4 @@
+#Wed May 23 10:53:57 SAST 2018
+base.0=/Users/chuckshale/Desktop/C-Nect-1 2/android/app/build/intermediates/transforms/dexMerger/debug/9
+path.0=classes.dex
+renamed.0=classes.dex

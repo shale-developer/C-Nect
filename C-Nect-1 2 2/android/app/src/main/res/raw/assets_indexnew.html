@@ -1,0 +1,382 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript">
+  
+  Questions = [{ type: "word",course_image: "",image: "","test quiz" : "test quiz",question: "Bird is the answer",
+          answers: {"" : "" },
+    correctAnswer: "bird"
+  },];
+
+</script>
+<style>
+body{
+  font-size: 20px;
+  font-family: 'Work Sans', sans-serif;
+  color: #333;
+  font-weight: 300;
+  text-align: center;
+  background-color: #f8f6f0;
+}
+
+h1{
+  font-weight: 300;
+  margin: 0px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: #444;
+  color: #fff;
+}
+
+.question{
+  font-size: 30px;
+  margin-bottom: 10px;
+  background-color: orange;
+  padding: 5px;
+}
+
+.answers {
+  margin-bottom: 20px;
+  text-align: left;
+  display: inline-block;
+  padding: 10px;
+}
+
+.answers label{
+  display: block;
+  margin-bottom: 10px;
+}
+
+button{
+  font-family: 'Work Sans', sans-serif;
+    font-size: 22px;
+    background-color: #279;
+    color: #fff;
+    border: 0px;
+    border-radius: 3px;
+    padding: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+button:hover{
+    background-color: #38a;
+}
+
+.slide{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.active-slide{
+  opacity: 1;
+  z-index: 2;
+}
+
+.quiz-container{
+  position: relative;
+  height: 250px;
+  margin-top: 10px;
+}
+
+#next {
+	margin:35px;
+}
+
+.celebrate_win {
+  background-color: green;
+  padding:5px;
+  color:white;
+}
+
+.celebrate_fail {
+  background-color: red;
+  padding:5px;
+  color:white;
+}
+</style>
+</head>
+<body>
+
+<h1>C-NNECT Quiz Delivery System</h1>
+<p><div id="course_image"></div></p>
+<div class="quiz-container">
+  <div id="quiz"></div>
+</div>
+<div id='celebrate'></div>
+<br />
+<button id="next">Next Question</button>
+<br />
+<button id="submit">Submit Quiz</button>
+<div id="results"></div>
+
+<script>
+ document.getElementById('course_image').innerHTML = '<img src="' + Questions[0].course_image + '" />';
+(function() {
+  //const myQuestions = JSON.parse(questions);
+  function shuffle(sourceArray) {
+    for (var i = 0; i < sourceArray.length - 1; i++) {
+        var j = i + Math.floor(Math.random() * (sourceArray.length - i));
+
+        var temp = sourceArray[j];
+        sourceArray[j] = sourceArray[i];
+        sourceArray[i] = temp;
+    }
+    return sourceArray;
+  }
+  const myQuestions = shuffle(Questions);
+
+  function buildQuiz() {
+    // we'll need a place to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // we'll want to store the list of answer choices
+      const answers = [];
+
+      //only allow 1 image per question
+      let mcq_image_counter = 1;
+      let word_image_counter = 1;
+      let check_box_image_counter = 1;
+
+      // and for each available answer...
+      for (letter in currentQuestion.answers) {
+        // ...add an HTML radio button
+        if(currentQuestion.type == 'mcq') {
+          if(currentQuestion.image != '' && mcq_image_counter == 1) {
+            answers.push(
+            `<img src="${currentQuestion.image}" width="150" /><br /><br />
+              <label>
+              <input type="radio" name="question${questionNumber}" value="${letter}">
+              <!--${letter} :-->
+              ${currentQuestion.answers[letter]}
+            </label>`
+            );
+          } else {
+            answers.push(
+              `<label>
+                 <input type="radio" name="question${questionNumber}" value="${letter}">
+                  <!--${letter} :-->
+                  ${currentQuestion.answers[letter]}
+               </label>`
+            );
+          }
+          mcq_image_counter++;
+        } 
+
+        if(currentQuestion.type == 'word') {
+           if(currentQuestion.image != '' && word_image_counter == 1) {
+            answers.push(
+              `<img src="${currentQuestion.image}" height="50" /><br /><br />
+              <label>
+                 <input type="text" id="question${questionNumber}" value="${letter}">
+                  <!--${letter} :-->
+                  ${currentQuestion.answers[letter]}
+               </label>`
+            ); 
+          } else {
+            answers.push(
+              `<label>
+                 <input type="text" id="question${questionNumber}" value="${letter}">
+                  <!--${letter} :-->
+                  ${currentQuestion.answers[letter]}
+               </label>`
+            );  
+          }
+          word_image_counter++;
+        }
+
+        if(currentQuestion.type == 'check_box') {
+           if(currentQuestion.image != '' && check_box_image_counter == 1) {
+            answers.push(
+              `<img src="${currentQuestion.image}" height="50" /><br /><br />
+              <label>
+                 <input type="checkbox" class="question${questionNumber}" id="question${questionNumber}" value="${letter}">
+                  <!--${letter} :-->
+                  ${currentQuestion.answers[letter]}
+               </label>`
+            ); 
+          } else {
+            answers.push(
+              `<label>
+                 <input type="checkbox" class="question${questionNumber}" id="question${questionNumber}" value="${letter}">
+                  <!--${letter} :-->
+                  ${currentQuestion.answers[letter]}
+               </label>`
+            );  
+          }
+          check_box_image_counter++;;
+        }
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        `<div class="slide">
+             <div class="question"> ${currentQuestion.question} </div>
+             <div class="answers"> ${answers.join("")} </div>
+           </div>`
+      );
+
+    });
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join("");
+  }
+
+  function showResults() {
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll(".answers");
+
+    // keep track of user's answers
+    let numCorrect = 0;
+    let userAnswer = '';
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      if(currentQuestion.type == 'mcq') {
+        const selector = `input[name=question${questionNumber}]:checked`;
+        userAnswer = (answerContainer.querySelector(selector) || {}).value;
+      } 
+      if(currentQuestion.type == 'word') {
+        const selector = `question${questionNumber}`;
+        userAnswer = document.getElementById('question' + `${questionNumber}`).value.toLowerCase();
+      }
+      if(currentQuestion.type == 'check_box') {
+
+        const selector = document.querySelectorAll('input[type=checkbox]:checked.question' + questionNumber);
+
+        var ans_array = [];
+        for (var i = 0; i < selector.length; i++) {
+          ans_array.push(selector[i].value);
+        }
+        ans_array.sort();
+        var userAnswer = ans_array.join();
+      }
+
+      // if answer is correct
+      if (userAnswer === currentQuestion.correctAnswer) {
+        // add to the number of correct answers
+        numCorrect++;
+        // color the answers green
+        //answerContainers[questionNumber].style.background = "lightgreen";
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_win">HOOOORRRAAAAYY!!!</span>';
+      } else {
+        // if answer is wrong or blank
+        //answerContainers[questionNumber].style.background = "red";
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_fail">Failure!!! - the correct answer is: ' + currentQuestion.correctAnswer + '</span>';
+      }
+
+    });
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+  }
+
+  function showSlide(n) {
+
+    var x = document.getElementById("next");
+    x.style.display = "inline-block";
+
+    slides[currentSlide].classList.remove("active-slide");
+    slides[n].classList.add("active-slide");
+    currentSlide = n;
+        
+    if (currentSlide === slides.length - 1) {
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
+    }
+
+  }
+
+  function checkAnswers() {
+     var x = document.getElementById("next");
+     x.style.display = "none";
+     
+    if(myQuestions[currentSlide].type == 'check_box') {
+      let ans_array = [];
+      var checkboxes = document.querySelectorAll('input[type=checkbox]:checked.question' + currentSlide);
+     
+      for (var i = 0; i < checkboxes.length; i++) {
+        ans_array.push(checkboxes[i].value);
+      }
+
+      ans_array.sort();
+      var ans = ans_array.join();
+
+      if(ans == myQuestions[currentSlide].correctAnswer) {
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_win">HOOOORRRAAAAYY!!!</span>';
+        ans_array = [];
+        setTimeout(showNextSlide, 1000);
+      } else {
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_fail">Failure!!! - the correct answer is: ' + myQuestions[currentSlide].correctAnswer + '</span>';
+        ans_array = [];
+        setTimeout(showNextSlide, 1000);
+      }
+ 
+    }
+
+    if(myQuestions[currentSlide].type == 'word') {
+      if(document.getElementById('question'+currentSlide).value.toLowerCase() == myQuestions[currentSlide].correctAnswer.toLowerCase()) {
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_win">HOOOORRRAAAAYY!!!</span>';
+        setTimeout(showNextSlide, 1000);
+      } else {
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_fail">Failure!!! - the correct answer is: ' + myQuestions[currentSlide].correctAnswer.toLowerCase() + '</span>';
+        setTimeout(showNextSlide, 1000);
+      }
+    }
+
+    if(myQuestions[currentSlide].type == 'mcq') {
+      var radios = document.getElementsByTagName('input');
+      var value;
+      for (var i = 0; i < radios.length; i++) {
+          if (radios[i].type === 'radio' && radios[i].checked) {
+            value = radios[i].value; 
+          }
+      }
+
+      if(value == myQuestions[currentSlide].correctAnswer) {
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_win">HOOOORRRAAAAYY!!!</span>';
+        setTimeout(showNextSlide, 1000);
+      } else {
+        document.getElementById('celebrate').innerHTML = '<span class="celebrate_fail">Failure!!! - the correct answer is: ' + myQuestions[currentSlide].correctAnswer + '</span>';
+        setTimeout(showNextSlide, 1000);
+      }
+    }
+    //showSlide(currentSlide + 1);   
+  }
+
+   function showNextSlide() {
+    document.getElementById('celebrate').innerHTML = '';
+    showSlide(currentSlide + 1);
+   }
+
+  const quizContainer = document.getElementById("quiz");
+  const resultsContainer = document.getElementById("results");
+  const submitButton = document.getElementById("submit");
+
+  // display quiz right away
+  buildQuiz();
+
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  showSlide(0);
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+  nextButton.addEventListener("click", checkAnswers);
+})();
+</script>
+</body>
+</html>

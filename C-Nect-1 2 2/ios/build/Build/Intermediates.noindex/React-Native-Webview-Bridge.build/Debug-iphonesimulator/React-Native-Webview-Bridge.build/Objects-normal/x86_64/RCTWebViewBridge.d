@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/chuckshale/Desktop/C-Nect-1/node_modules/react-native-webview-bridge/ios/RCTWebViewBridge.m \
+  /Users/chuckshale/Desktop/C-Nect-1/node_modules/react-native-webview-bridge/ios/RCTWebViewBridge.h \
+  ../../../node_modules/react-native/React/Views/RCTView.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTView.h \
+  ../../../node_modules/react-native/React/Views/RCTAutoInsetsProtocol.h \
+  ../../../node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  ../../../node_modules/react-native/React/Base/RCTEventDispatcher.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/chuckshale/Desktop/C-Nect-1/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  ../../../node_modules/react-native/React/Base/RCTLog.h \
+  ../../../node_modules/react-native/React/Base/RCTUtils.h \
+  ../../../node_modules/react-native/React/Views/UIView+React.h
